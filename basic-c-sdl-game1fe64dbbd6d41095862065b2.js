@@ -1528,7 +1528,7 @@ function createExportWrapper(name, fixedasm) {
 }
 
 var wasmBinaryFile;
-  wasmBinaryFile = 'basic-c-sdl-game739f900a45709b62cd775f2a.wasm';
+  wasmBinaryFile = 'basic-c-sdl-game1fe64dbbd6d41095862065b2.wasm';
   if (!isDataURI(wasmBinaryFile)) {
     wasmBinaryFile = locateFile(wasmBinaryFile);
   }
@@ -1702,22 +1702,22 @@ var tempI64;
 // === Body ===
 
 var ASM_CONSTS = {
-  66232: function($0) {var str = UTF8ToString($0) + '\n\n' + 'Abort/Retry/Ignore/AlwaysIgnore? [ariA] :'; var reply = window.prompt(str, "i"); if (reply === null) { reply = "i"; } return allocate(intArrayFromString(reply), 'i8', ALLOC_NORMAL);},  
- 66457: function() {if (typeof(AudioContext) !== 'undefined') { return 1; } else if (typeof(webkitAudioContext) !== 'undefined') { return 1; } return 0;},  
- 66594: function() {if ((typeof(navigator.mediaDevices) !== 'undefined') && (typeof(navigator.mediaDevices.getUserMedia) !== 'undefined')) { return 1; } else if (typeof(navigator.webkitGetUserMedia) !== 'undefined') { return 1; } return 0;},  
- 66818: function($0) {if(typeof(Module['SDL2']) === 'undefined') { Module['SDL2'] = {}; } var SDL2 = Module['SDL2']; if (!$0) { SDL2.audio = {}; } else { SDL2.capture = {}; } if (!SDL2.audioContext) { if (typeof(AudioContext) !== 'undefined') { SDL2.audioContext = new AudioContext(); } else if (typeof(webkitAudioContext) !== 'undefined') { SDL2.audioContext = new webkitAudioContext(); } if (SDL2.audioContext) { autoResumeAudioContext(SDL2.audioContext); } } return SDL2.audioContext === undefined ? -1 : 0;},  
- 67311: function() {var SDL2 = Module['SDL2']; return SDL2.audioContext.sampleRate;},  
- 67379: function($0, $1, $2, $3) {var SDL2 = Module['SDL2']; var have_microphone = function(stream) { if (SDL2.capture.silenceTimer !== undefined) { clearTimeout(SDL2.capture.silenceTimer); SDL2.capture.silenceTimer = undefined; } SDL2.capture.mediaStreamNode = SDL2.audioContext.createMediaStreamSource(stream); SDL2.capture.scriptProcessorNode = SDL2.audioContext.createScriptProcessor($1, $0, 1); SDL2.capture.scriptProcessorNode.onaudioprocess = function(audioProcessingEvent) { if ((SDL2 === undefined) || (SDL2.capture === undefined)) { return; } audioProcessingEvent.outputBuffer.getChannelData(0).fill(0.0); SDL2.capture.currentCaptureBuffer = audioProcessingEvent.inputBuffer; dynCall('vi', $2, [$3]); }; SDL2.capture.mediaStreamNode.connect(SDL2.capture.scriptProcessorNode); SDL2.capture.scriptProcessorNode.connect(SDL2.audioContext.destination); SDL2.capture.stream = stream; }; var no_microphone = function(error) { }; SDL2.capture.silenceBuffer = SDL2.audioContext.createBuffer($0, $1, SDL2.audioContext.sampleRate); SDL2.capture.silenceBuffer.getChannelData(0).fill(0.0); var silence_callback = function() { SDL2.capture.currentCaptureBuffer = SDL2.capture.silenceBuffer; dynCall('vi', $2, [$3]); }; SDL2.capture.silenceTimer = setTimeout(silence_callback, ($1 / SDL2.audioContext.sampleRate) * 1000); if ((navigator.mediaDevices !== undefined) && (navigator.mediaDevices.getUserMedia !== undefined)) { navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(have_microphone).catch(no_microphone); } else if (navigator.webkitGetUserMedia !== undefined) { navigator.webkitGetUserMedia({ audio: true, video: false }, have_microphone, no_microphone); }},  
- 69031: function($0, $1, $2, $3) {var SDL2 = Module['SDL2']; SDL2.audio.scriptProcessorNode = SDL2.audioContext['createScriptProcessor']($1, 0, $0); SDL2.audio.scriptProcessorNode['onaudioprocess'] = function (e) { if ((SDL2 === undefined) || (SDL2.audio === undefined)) { return; } SDL2.audio.currentOutputBuffer = e['outputBuffer']; dynCall('vi', $2, [$3]); }; SDL2.audio.scriptProcessorNode['connect'](SDL2.audioContext['destination']);},  
- 69441: function($0, $1) {var SDL2 = Module['SDL2']; var numChannels = SDL2.capture.currentCaptureBuffer.numberOfChannels; for (var c = 0; c < numChannels; ++c) { var channelData = SDL2.capture.currentCaptureBuffer.getChannelData(c); if (channelData.length != $1) { throw 'Web Audio capture buffer length mismatch! Destination size: ' + channelData.length + ' samples vs expected ' + $1 + ' samples!'; } if (numChannels == 1) { for (var j = 0; j < $1; ++j) { setValue($0 + (j * 4), channelData[j], 'float'); } } else { for (var j = 0; j < $1; ++j) { setValue($0 + (((j * numChannels) + c) * 4), channelData[j], 'float'); } } }},  
- 70046: function($0, $1) {var SDL2 = Module['SDL2']; var numChannels = SDL2.audio.currentOutputBuffer['numberOfChannels']; for (var c = 0; c < numChannels; ++c) { var channelData = SDL2.audio.currentOutputBuffer['getChannelData'](c); if (channelData.length != $1) { throw 'Web Audio output buffer length mismatch! Destination size: ' + channelData.length + ' samples vs expected ' + $1 + ' samples!'; } for (var j = 0; j < $1; ++j) { channelData[j] = HEAPF32[$0 + ((j*numChannels + c) << 2) >> 2]; } }},  
- 70526: function($0) {var SDL2 = Module['SDL2']; if ($0) { if (SDL2.capture.silenceTimer !== undefined) { clearTimeout(SDL2.capture.silenceTimer); } if (SDL2.capture.stream !== undefined) { var tracks = SDL2.capture.stream.getAudioTracks(); for (var i = 0; i < tracks.length; i++) { SDL2.capture.stream.removeTrack(tracks[i]); } SDL2.capture.stream = undefined; } if (SDL2.capture.scriptProcessorNode !== undefined) { SDL2.capture.scriptProcessorNode.onaudioprocess = function(audioProcessingEvent) {}; SDL2.capture.scriptProcessorNode.disconnect(); SDL2.capture.scriptProcessorNode = undefined; } if (SDL2.capture.mediaStreamNode !== undefined) { SDL2.capture.mediaStreamNode.disconnect(); SDL2.capture.mediaStreamNode = undefined; } if (SDL2.capture.silenceBuffer !== undefined) { SDL2.capture.silenceBuffer = undefined } SDL2.capture = undefined; } else { if (SDL2.audio.scriptProcessorNode != undefined) { SDL2.audio.scriptProcessorNode.disconnect(); SDL2.audio.scriptProcessorNode = undefined; } SDL2.audio = undefined; } if ((SDL2.audioContext !== undefined) && (SDL2.audio === undefined) && (SDL2.capture === undefined)) { SDL2.audioContext.close(); SDL2.audioContext = undefined; }},  
- 71698: function($0, $1, $2) {var w = $0; var h = $1; var pixels = $2; if (!Module['SDL2']) Module['SDL2'] = {}; var SDL2 = Module['SDL2']; if (SDL2.ctxCanvas !== Module['canvas']) { SDL2.ctx = Module['createContext'](Module['canvas'], false, true); SDL2.ctxCanvas = Module['canvas']; } if (SDL2.w !== w || SDL2.h !== h || SDL2.imageCtx !== SDL2.ctx) { SDL2.image = SDL2.ctx.createImageData(w, h); SDL2.w = w; SDL2.h = h; SDL2.imageCtx = SDL2.ctx; } var data = SDL2.image.data; var src = pixels >> 2; var dst = 0; var num; if (typeof CanvasPixelArray !== 'undefined' && data instanceof CanvasPixelArray) { num = data.length; while (dst < num) { var val = HEAP32[src]; data[dst ] = val & 0xff; data[dst+1] = (val >> 8) & 0xff; data[dst+2] = (val >> 16) & 0xff; data[dst+3] = 0xff; src++; dst += 4; } } else { if (SDL2.data32Data !== data) { SDL2.data32 = new Int32Array(data.buffer); SDL2.data8 = new Uint8Array(data.buffer); SDL2.data32Data = data; } var data32 = SDL2.data32; num = data32.length; data32.set(HEAP32.subarray(src, src + num)); var data8 = SDL2.data8; var i = 3; var j = i + 4*num; if (num % 8 == 0) { while (i < j) { data8[i] = 0xff; i = i + 4 | 0; data8[i] = 0xff; i = i + 4 | 0; data8[i] = 0xff; i = i + 4 | 0; data8[i] = 0xff; i = i + 4 | 0; data8[i] = 0xff; i = i + 4 | 0; data8[i] = 0xff; i = i + 4 | 0; data8[i] = 0xff; i = i + 4 | 0; data8[i] = 0xff; i = i + 4 | 0; } } else { while (i < j) { data8[i] = 0xff; i = i + 4 | 0; } } } SDL2.ctx.putImageData(SDL2.image, 0, 0); return 0;},  
- 73177: function($0, $1, $2, $3, $4) {var w = $0; var h = $1; var hot_x = $2; var hot_y = $3; var pixels = $4; var canvas = document.createElement("canvas"); canvas.width = w; canvas.height = h; var ctx = canvas.getContext("2d"); var image = ctx.createImageData(w, h); var data = image.data; var src = pixels >> 2; var dst = 0; var num; if (typeof CanvasPixelArray !== 'undefined' && data instanceof CanvasPixelArray) { num = data.length; while (dst < num) { var val = HEAP32[src]; data[dst ] = val & 0xff; data[dst+1] = (val >> 8) & 0xff; data[dst+2] = (val >> 16) & 0xff; data[dst+3] = (val >> 24) & 0xff; src++; dst += 4; } } else { var data32 = new Int32Array(data.buffer); num = data32.length; data32.set(HEAP32.subarray(src, src + num)); } ctx.putImageData(image, 0, 0); var url = hot_x === 0 && hot_y === 0 ? "url(" + canvas.toDataURL() + "), auto" : "url(" + canvas.toDataURL() + ") " + hot_x + " " + hot_y + ", auto"; var urlBuf = _malloc(url.length + 1); stringToUTF8(url, urlBuf, url.length + 1); return urlBuf;},  
- 74166: function($0) {if (Module['canvas']) { Module['canvas'].style['cursor'] = UTF8ToString($0); } return 0;},  
- 74259: function() {if (Module['canvas']) { Module['canvas'].style['cursor'] = 'none'; }},  
- 74328: function() {return window.innerWidth;},  
- 74358: function() {return window.innerHeight;}
+  68712: function($0) {var str = UTF8ToString($0) + '\n\n' + 'Abort/Retry/Ignore/AlwaysIgnore? [ariA] :'; var reply = window.prompt(str, "i"); if (reply === null) { reply = "i"; } return allocate(intArrayFromString(reply), 'i8', ALLOC_NORMAL);},  
+ 68937: function() {if (typeof(AudioContext) !== 'undefined') { return 1; } else if (typeof(webkitAudioContext) !== 'undefined') { return 1; } return 0;},  
+ 69074: function() {if ((typeof(navigator.mediaDevices) !== 'undefined') && (typeof(navigator.mediaDevices.getUserMedia) !== 'undefined')) { return 1; } else if (typeof(navigator.webkitGetUserMedia) !== 'undefined') { return 1; } return 0;},  
+ 69298: function($0) {if(typeof(Module['SDL2']) === 'undefined') { Module['SDL2'] = {}; } var SDL2 = Module['SDL2']; if (!$0) { SDL2.audio = {}; } else { SDL2.capture = {}; } if (!SDL2.audioContext) { if (typeof(AudioContext) !== 'undefined') { SDL2.audioContext = new AudioContext(); } else if (typeof(webkitAudioContext) !== 'undefined') { SDL2.audioContext = new webkitAudioContext(); } if (SDL2.audioContext) { autoResumeAudioContext(SDL2.audioContext); } } return SDL2.audioContext === undefined ? -1 : 0;},  
+ 69791: function() {var SDL2 = Module['SDL2']; return SDL2.audioContext.sampleRate;},  
+ 69859: function($0, $1, $2, $3) {var SDL2 = Module['SDL2']; var have_microphone = function(stream) { if (SDL2.capture.silenceTimer !== undefined) { clearTimeout(SDL2.capture.silenceTimer); SDL2.capture.silenceTimer = undefined; } SDL2.capture.mediaStreamNode = SDL2.audioContext.createMediaStreamSource(stream); SDL2.capture.scriptProcessorNode = SDL2.audioContext.createScriptProcessor($1, $0, 1); SDL2.capture.scriptProcessorNode.onaudioprocess = function(audioProcessingEvent) { if ((SDL2 === undefined) || (SDL2.capture === undefined)) { return; } audioProcessingEvent.outputBuffer.getChannelData(0).fill(0.0); SDL2.capture.currentCaptureBuffer = audioProcessingEvent.inputBuffer; dynCall('vi', $2, [$3]); }; SDL2.capture.mediaStreamNode.connect(SDL2.capture.scriptProcessorNode); SDL2.capture.scriptProcessorNode.connect(SDL2.audioContext.destination); SDL2.capture.stream = stream; }; var no_microphone = function(error) { }; SDL2.capture.silenceBuffer = SDL2.audioContext.createBuffer($0, $1, SDL2.audioContext.sampleRate); SDL2.capture.silenceBuffer.getChannelData(0).fill(0.0); var silence_callback = function() { SDL2.capture.currentCaptureBuffer = SDL2.capture.silenceBuffer; dynCall('vi', $2, [$3]); }; SDL2.capture.silenceTimer = setTimeout(silence_callback, ($1 / SDL2.audioContext.sampleRate) * 1000); if ((navigator.mediaDevices !== undefined) && (navigator.mediaDevices.getUserMedia !== undefined)) { navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(have_microphone).catch(no_microphone); } else if (navigator.webkitGetUserMedia !== undefined) { navigator.webkitGetUserMedia({ audio: true, video: false }, have_microphone, no_microphone); }},  
+ 71511: function($0, $1, $2, $3) {var SDL2 = Module['SDL2']; SDL2.audio.scriptProcessorNode = SDL2.audioContext['createScriptProcessor']($1, 0, $0); SDL2.audio.scriptProcessorNode['onaudioprocess'] = function (e) { if ((SDL2 === undefined) || (SDL2.audio === undefined)) { return; } SDL2.audio.currentOutputBuffer = e['outputBuffer']; dynCall('vi', $2, [$3]); }; SDL2.audio.scriptProcessorNode['connect'](SDL2.audioContext['destination']);},  
+ 71921: function($0, $1) {var SDL2 = Module['SDL2']; var numChannels = SDL2.capture.currentCaptureBuffer.numberOfChannels; for (var c = 0; c < numChannels; ++c) { var channelData = SDL2.capture.currentCaptureBuffer.getChannelData(c); if (channelData.length != $1) { throw 'Web Audio capture buffer length mismatch! Destination size: ' + channelData.length + ' samples vs expected ' + $1 + ' samples!'; } if (numChannels == 1) { for (var j = 0; j < $1; ++j) { setValue($0 + (j * 4), channelData[j], 'float'); } } else { for (var j = 0; j < $1; ++j) { setValue($0 + (((j * numChannels) + c) * 4), channelData[j], 'float'); } } }},  
+ 72526: function($0, $1) {var SDL2 = Module['SDL2']; var numChannels = SDL2.audio.currentOutputBuffer['numberOfChannels']; for (var c = 0; c < numChannels; ++c) { var channelData = SDL2.audio.currentOutputBuffer['getChannelData'](c); if (channelData.length != $1) { throw 'Web Audio output buffer length mismatch! Destination size: ' + channelData.length + ' samples vs expected ' + $1 + ' samples!'; } for (var j = 0; j < $1; ++j) { channelData[j] = HEAPF32[$0 + ((j*numChannels + c) << 2) >> 2]; } }},  
+ 73006: function($0) {var SDL2 = Module['SDL2']; if ($0) { if (SDL2.capture.silenceTimer !== undefined) { clearTimeout(SDL2.capture.silenceTimer); } if (SDL2.capture.stream !== undefined) { var tracks = SDL2.capture.stream.getAudioTracks(); for (var i = 0; i < tracks.length; i++) { SDL2.capture.stream.removeTrack(tracks[i]); } SDL2.capture.stream = undefined; } if (SDL2.capture.scriptProcessorNode !== undefined) { SDL2.capture.scriptProcessorNode.onaudioprocess = function(audioProcessingEvent) {}; SDL2.capture.scriptProcessorNode.disconnect(); SDL2.capture.scriptProcessorNode = undefined; } if (SDL2.capture.mediaStreamNode !== undefined) { SDL2.capture.mediaStreamNode.disconnect(); SDL2.capture.mediaStreamNode = undefined; } if (SDL2.capture.silenceBuffer !== undefined) { SDL2.capture.silenceBuffer = undefined } SDL2.capture = undefined; } else { if (SDL2.audio.scriptProcessorNode != undefined) { SDL2.audio.scriptProcessorNode.disconnect(); SDL2.audio.scriptProcessorNode = undefined; } SDL2.audio = undefined; } if ((SDL2.audioContext !== undefined) && (SDL2.audio === undefined) && (SDL2.capture === undefined)) { SDL2.audioContext.close(); SDL2.audioContext = undefined; }},  
+ 74178: function($0, $1, $2) {var w = $0; var h = $1; var pixels = $2; if (!Module['SDL2']) Module['SDL2'] = {}; var SDL2 = Module['SDL2']; if (SDL2.ctxCanvas !== Module['canvas']) { SDL2.ctx = Module['createContext'](Module['canvas'], false, true); SDL2.ctxCanvas = Module['canvas']; } if (SDL2.w !== w || SDL2.h !== h || SDL2.imageCtx !== SDL2.ctx) { SDL2.image = SDL2.ctx.createImageData(w, h); SDL2.w = w; SDL2.h = h; SDL2.imageCtx = SDL2.ctx; } var data = SDL2.image.data; var src = pixels >> 2; var dst = 0; var num; if (typeof CanvasPixelArray !== 'undefined' && data instanceof CanvasPixelArray) { num = data.length; while (dst < num) { var val = HEAP32[src]; data[dst ] = val & 0xff; data[dst+1] = (val >> 8) & 0xff; data[dst+2] = (val >> 16) & 0xff; data[dst+3] = 0xff; src++; dst += 4; } } else { if (SDL2.data32Data !== data) { SDL2.data32 = new Int32Array(data.buffer); SDL2.data8 = new Uint8Array(data.buffer); SDL2.data32Data = data; } var data32 = SDL2.data32; num = data32.length; data32.set(HEAP32.subarray(src, src + num)); var data8 = SDL2.data8; var i = 3; var j = i + 4*num; if (num % 8 == 0) { while (i < j) { data8[i] = 0xff; i = i + 4 | 0; data8[i] = 0xff; i = i + 4 | 0; data8[i] = 0xff; i = i + 4 | 0; data8[i] = 0xff; i = i + 4 | 0; data8[i] = 0xff; i = i + 4 | 0; data8[i] = 0xff; i = i + 4 | 0; data8[i] = 0xff; i = i + 4 | 0; data8[i] = 0xff; i = i + 4 | 0; } } else { while (i < j) { data8[i] = 0xff; i = i + 4 | 0; } } } SDL2.ctx.putImageData(SDL2.image, 0, 0); return 0;},  
+ 75657: function($0, $1, $2, $3, $4) {var w = $0; var h = $1; var hot_x = $2; var hot_y = $3; var pixels = $4; var canvas = document.createElement("canvas"); canvas.width = w; canvas.height = h; var ctx = canvas.getContext("2d"); var image = ctx.createImageData(w, h); var data = image.data; var src = pixels >> 2; var dst = 0; var num; if (typeof CanvasPixelArray !== 'undefined' && data instanceof CanvasPixelArray) { num = data.length; while (dst < num) { var val = HEAP32[src]; data[dst ] = val & 0xff; data[dst+1] = (val >> 8) & 0xff; data[dst+2] = (val >> 16) & 0xff; data[dst+3] = (val >> 24) & 0xff; src++; dst += 4; } } else { var data32 = new Int32Array(data.buffer); num = data32.length; data32.set(HEAP32.subarray(src, src + num)); } ctx.putImageData(image, 0, 0); var url = hot_x === 0 && hot_y === 0 ? "url(" + canvas.toDataURL() + "), auto" : "url(" + canvas.toDataURL() + ") " + hot_x + " " + hot_y + ", auto"; var urlBuf = _malloc(url.length + 1); stringToUTF8(url, urlBuf, url.length + 1); return urlBuf;},  
+ 76646: function($0) {if (Module['canvas']) { Module['canvas'].style['cursor'] = UTF8ToString($0); } return 0;},  
+ 76739: function() {if (Module['canvas']) { Module['canvas'].style['cursor'] = 'none'; }},  
+ 76808: function() {return window.innerWidth;},  
+ 76838: function() {return window.innerHeight;}
 };
 
 
@@ -4260,6 +4260,781 @@ var ASM_CONSTS = {
     return -e.errno;
   }
   }
+
+  function __embind_register_bigint(primitiveType, name, size, minRange, maxRange) {}
+
+  function getShiftFromSize(size) {
+      
+      switch (size) {
+          case 1: return 0;
+          case 2: return 1;
+          case 4: return 2;
+          case 8: return 3;
+          default:
+              throw new TypeError('Unknown type size: ' + size);
+      }
+    }
+  
+  function embind_init_charCodes() {
+      var codes = new Array(256);
+      for (var i = 0; i < 256; ++i) {
+          codes[i] = String.fromCharCode(i);
+      }
+      embind_charCodes = codes;
+    }
+  var embind_charCodes = undefined;
+  function readLatin1String(ptr) {
+      var ret = "";
+      var c = ptr;
+      while (HEAPU8[c]) {
+          ret += embind_charCodes[HEAPU8[c++]];
+      }
+      return ret;
+    }
+  
+  var awaitingDependencies = {};
+  
+  var registeredTypes = {};
+  
+  var typeDependencies = {};
+  
+  var char_0 = 48;
+  
+  var char_9 = 57;
+  function makeLegalFunctionName(name) {
+      if (undefined === name) {
+          return '_unknown';
+      }
+      name = name.replace(/[^a-zA-Z0-9_]/g, '$');
+      var f = name.charCodeAt(0);
+      if (f >= char_0 && f <= char_9) {
+          return '_' + name;
+      } else {
+          return name;
+      }
+    }
+  function createNamedFunction(name, body) {
+      name = makeLegalFunctionName(name);
+      /*jshint evil:true*/
+      return new Function(
+          "body",
+          "return function " + name + "() {\n" +
+          "    \"use strict\";" +
+          "    return body.apply(this, arguments);\n" +
+          "};\n"
+      )(body);
+    }
+  function extendError(baseErrorType, errorName) {
+      var errorClass = createNamedFunction(errorName, function(message) {
+          this.name = errorName;
+          this.message = message;
+  
+          var stack = (new Error(message)).stack;
+          if (stack !== undefined) {
+              this.stack = this.toString() + '\n' +
+                  stack.replace(/^Error(:[^\n]*)?\n/, '');
+          }
+      });
+      errorClass.prototype = Object.create(baseErrorType.prototype);
+      errorClass.prototype.constructor = errorClass;
+      errorClass.prototype.toString = function() {
+          if (this.message === undefined) {
+              return this.name;
+          } else {
+              return this.name + ': ' + this.message;
+          }
+      };
+  
+      return errorClass;
+    }
+  var BindingError = undefined;
+  function throwBindingError(message) {
+      throw new BindingError(message);
+    }
+  
+  var InternalError = undefined;
+  function throwInternalError(message) {
+      throw new InternalError(message);
+    }
+  function whenDependentTypesAreResolved(myTypes, dependentTypes, getTypeConverters) {
+      myTypes.forEach(function(type) {
+          typeDependencies[type] = dependentTypes;
+      });
+  
+      function onComplete(typeConverters) {
+          var myTypeConverters = getTypeConverters(typeConverters);
+          if (myTypeConverters.length !== myTypes.length) {
+              throwInternalError('Mismatched type converter count');
+          }
+          for (var i = 0; i < myTypes.length; ++i) {
+              registerType(myTypes[i], myTypeConverters[i]);
+          }
+      }
+  
+      var typeConverters = new Array(dependentTypes.length);
+      var unregisteredTypes = [];
+      var registered = 0;
+      dependentTypes.forEach(function(dt, i) {
+          if (registeredTypes.hasOwnProperty(dt)) {
+              typeConverters[i] = registeredTypes[dt];
+          } else {
+              unregisteredTypes.push(dt);
+              if (!awaitingDependencies.hasOwnProperty(dt)) {
+                  awaitingDependencies[dt] = [];
+              }
+              awaitingDependencies[dt].push(function() {
+                  typeConverters[i] = registeredTypes[dt];
+                  ++registered;
+                  if (registered === unregisteredTypes.length) {
+                      onComplete(typeConverters);
+                  }
+              });
+          }
+      });
+      if (0 === unregisteredTypes.length) {
+          onComplete(typeConverters);
+      }
+    }
+  /** @param {Object=} options */
+  function registerType(rawType, registeredInstance, options = {}) {
+      if (!('argPackAdvance' in registeredInstance)) {
+          throw new TypeError('registerType registeredInstance requires argPackAdvance');
+      }
+  
+      var name = registeredInstance.name;
+      if (!rawType) {
+          throwBindingError('type "' + name + '" must have a positive integer typeid pointer');
+      }
+      if (registeredTypes.hasOwnProperty(rawType)) {
+          if (options.ignoreDuplicateRegistrations) {
+              return;
+          } else {
+              throwBindingError("Cannot register type '" + name + "' twice");
+          }
+      }
+  
+      registeredTypes[rawType] = registeredInstance;
+      delete typeDependencies[rawType];
+  
+      if (awaitingDependencies.hasOwnProperty(rawType)) {
+          var callbacks = awaitingDependencies[rawType];
+          delete awaitingDependencies[rawType];
+          callbacks.forEach(function(cb) {
+              cb();
+          });
+      }
+    }
+  function __embind_register_bool(rawType, name, size, trueValue, falseValue) {
+      var shift = getShiftFromSize(size);
+  
+      name = readLatin1String(name);
+      registerType(rawType, {
+          name: name,
+          'fromWireType': function(wt) {
+              // ambiguous emscripten ABI: sometimes return values are
+              // true or false, and sometimes integers (0 or 1)
+              return !!wt;
+          },
+          'toWireType': function(destructors, o) {
+              return o ? trueValue : falseValue;
+          },
+          'argPackAdvance': 8,
+          'readValueFromPointer': function(pointer) {
+              // TODO: if heap is fixed (like in asm.js) this could be executed outside
+              var heap;
+              if (size === 1) {
+                  heap = HEAP8;
+              } else if (size === 2) {
+                  heap = HEAP16;
+              } else if (size === 4) {
+                  heap = HEAP32;
+              } else {
+                  throw new TypeError("Unknown boolean type size: " + name);
+              }
+              return this['fromWireType'](heap[pointer >> shift]);
+          },
+          destructorFunction: null, // This type does not need a destructor
+      });
+    }
+
+  var emval_free_list = [];
+  
+  var emval_handle_array = [{},{value:undefined},{value:null},{value:true},{value:false}];
+  function __emval_decref(handle) {
+      if (handle > 4 && 0 === --emval_handle_array[handle].refcount) {
+          emval_handle_array[handle] = undefined;
+          emval_free_list.push(handle);
+      }
+    }
+  
+  function count_emval_handles() {
+      var count = 0;
+      for (var i = 5; i < emval_handle_array.length; ++i) {
+          if (emval_handle_array[i] !== undefined) {
+              ++count;
+          }
+      }
+      return count;
+    }
+  
+  function get_first_emval() {
+      for (var i = 5; i < emval_handle_array.length; ++i) {
+          if (emval_handle_array[i] !== undefined) {
+              return emval_handle_array[i];
+          }
+      }
+      return null;
+    }
+  function init_emval() {
+      Module['count_emval_handles'] = count_emval_handles;
+      Module['get_first_emval'] = get_first_emval;
+    }
+  var Emval = {toValue:function(handle) {
+        if (!handle) {
+            throwBindingError('Cannot use deleted val. handle = ' + handle);
+        }
+        return emval_handle_array[handle].value;
+      },toHandle:function(value) {
+        switch (value) {
+          case undefined :{ return 1; }
+          case null :{ return 2; }
+          case true :{ return 3; }
+          case false :{ return 4; }
+          default:{
+            var handle = emval_free_list.length ?
+                emval_free_list.pop() :
+                emval_handle_array.length;
+    
+            emval_handle_array[handle] = {refcount: 1, value: value};
+            return handle;
+            }
+          }
+      }};
+  
+  function simpleReadValueFromPointer(pointer) {
+      return this['fromWireType'](HEAPU32[pointer >> 2]);
+    }
+  function __embind_register_emval(rawType, name) {
+      name = readLatin1String(name);
+      registerType(rawType, {
+          name: name,
+          'fromWireType': function(handle) {
+              var rv = Emval.toValue(handle);
+              __emval_decref(handle);
+              return rv;
+          },
+          'toWireType': function(destructors, value) {
+              return Emval.toHandle(value);
+          },
+          'argPackAdvance': 8,
+          'readValueFromPointer': simpleReadValueFromPointer,
+          destructorFunction: null, // This type does not need a destructor
+  
+          // TODO: do we need a deleteObject here?  write a test where
+          // emval is passed into JS via an interface
+      });
+    }
+
+  function _embind_repr(v) {
+      if (v === null) {
+          return 'null';
+      }
+      var t = typeof v;
+      if (t === 'object' || t === 'array' || t === 'function') {
+          return v.toString();
+      } else {
+          return '' + v;
+      }
+    }
+  
+  function floatReadValueFromPointer(name, shift) {
+      switch (shift) {
+          case 2: return function(pointer) {
+              return this['fromWireType'](HEAPF32[pointer >> 2]);
+          };
+          case 3: return function(pointer) {
+              return this['fromWireType'](HEAPF64[pointer >> 3]);
+          };
+          default:
+              throw new TypeError("Unknown float type: " + name);
+      }
+    }
+  function __embind_register_float(rawType, name, size) {
+      var shift = getShiftFromSize(size);
+      name = readLatin1String(name);
+      registerType(rawType, {
+          name: name,
+          'fromWireType': function(value) {
+               return value;
+          },
+          'toWireType': function(destructors, value) {
+              if (typeof value != "number" && typeof value != "boolean") {
+                  throw new TypeError('Cannot convert "' + _embind_repr(value) + '" to ' + this.name);
+              }
+              // The VM will perform JS to Wasm value conversion, according to the spec:
+              // https://www.w3.org/TR/wasm-js-api-1/#towebassemblyvalue
+              return value;
+          },
+          'argPackAdvance': 8,
+          'readValueFromPointer': floatReadValueFromPointer(name, shift),
+          destructorFunction: null, // This type does not need a destructor
+      });
+    }
+
+  function integerReadValueFromPointer(name, shift, signed) {
+      // integers are quite common, so generate very specialized functions
+      switch (shift) {
+          case 0: return signed ?
+              function readS8FromPointer(pointer) { return HEAP8[pointer]; } :
+              function readU8FromPointer(pointer) { return HEAPU8[pointer]; };
+          case 1: return signed ?
+              function readS16FromPointer(pointer) { return HEAP16[pointer >> 1]; } :
+              function readU16FromPointer(pointer) { return HEAPU16[pointer >> 1]; };
+          case 2: return signed ?
+              function readS32FromPointer(pointer) { return HEAP32[pointer >> 2]; } :
+              function readU32FromPointer(pointer) { return HEAPU32[pointer >> 2]; };
+          default:
+              throw new TypeError("Unknown integer type: " + name);
+      }
+    }
+  function __embind_register_integer(primitiveType, name, size, minRange, maxRange) {
+      name = readLatin1String(name);
+      if (maxRange === -1) { // LLVM doesn't have signed and unsigned 32-bit types, so u32 literals come out as 'i32 -1'. Always treat those as max u32.
+          maxRange = 4294967295;
+      }
+  
+      var shift = getShiftFromSize(size);
+  
+      var fromWireType = (value) => value;
+  
+      if (minRange === 0) {
+          var bitshift = 32 - 8*size;
+          fromWireType = (value) => (value << bitshift) >>> bitshift;
+      }
+  
+      var isUnsignedType = (name.includes('unsigned'));
+      var checkAssertions = (value, toTypeName) => {
+          if (typeof value != "number" && typeof value != "boolean") {
+              throw new TypeError('Cannot convert "' + _embind_repr(value) + '" to ' + toTypeName);
+          }
+          if (value < minRange || value > maxRange) {
+              throw new TypeError('Passing a number "' + _embind_repr(value) + '" from JS side to C/C++ side to an argument of type "' + name + '", which is outside the valid range [' + minRange + ', ' + maxRange + ']!');
+          }
+      }
+      var toWireType;
+      if (isUnsignedType) {
+          toWireType = function(destructors, value) {
+              checkAssertions(value, this.name);
+              return value >>> 0;
+          }
+      } else {
+          toWireType = function(destructors, value) {
+              checkAssertions(value, this.name);
+              // The VM will perform JS to Wasm value conversion, according to the spec:
+              // https://www.w3.org/TR/wasm-js-api-1/#towebassemblyvalue
+              return value;
+          }
+      }
+      registerType(primitiveType, {
+          name: name,
+          'fromWireType': fromWireType,
+          'toWireType': toWireType,
+          'argPackAdvance': 8,
+          'readValueFromPointer': integerReadValueFromPointer(name, shift, minRange !== 0),
+          destructorFunction: null, // This type does not need a destructor
+      });
+    }
+
+  function __embind_register_memory_view(rawType, dataTypeIndex, name) {
+      var typeMapping = [
+          Int8Array,
+          Uint8Array,
+          Int16Array,
+          Uint16Array,
+          Int32Array,
+          Uint32Array,
+          Float32Array,
+          Float64Array,
+      ];
+  
+      var TA = typeMapping[dataTypeIndex];
+  
+      function decodeMemoryView(handle) {
+          handle = handle >> 2;
+          var heap = HEAPU32;
+          var size = heap[handle]; // in elements
+          var data = heap[handle + 1]; // byte offset into emscripten heap
+          return new TA(buffer, data, size);
+      }
+  
+      name = readLatin1String(name);
+      registerType(rawType, {
+          name: name,
+          'fromWireType': decodeMemoryView,
+          'argPackAdvance': 8,
+          'readValueFromPointer': decodeMemoryView,
+      }, {
+          ignoreDuplicateRegistrations: true,
+      });
+    }
+
+  function __embind_register_std_string(rawType, name) {
+      name = readLatin1String(name);
+      var stdStringIsUTF8
+      //process only std::string bindings with UTF8 support, in contrast to e.g. std::basic_string<unsigned char>
+      = (name === "std::string");
+  
+      registerType(rawType, {
+          name: name,
+          'fromWireType': function(value) {
+              var length = HEAPU32[value >> 2];
+  
+              var str;
+              if (stdStringIsUTF8) {
+                  var decodeStartPtr = value + 4;
+                  // Looping here to support possible embedded '0' bytes
+                  for (var i = 0; i <= length; ++i) {
+                      var currentBytePtr = value + 4 + i;
+                      if (i == length || HEAPU8[currentBytePtr] == 0) {
+                          var maxRead = currentBytePtr - decodeStartPtr;
+                          var stringSegment = UTF8ToString(decodeStartPtr, maxRead);
+                          if (str === undefined) {
+                              str = stringSegment;
+                          } else {
+                              str += String.fromCharCode(0);
+                              str += stringSegment;
+                          }
+                          decodeStartPtr = currentBytePtr + 1;
+                      }
+                  }
+              } else {
+                  var a = new Array(length);
+                  for (var i = 0; i < length; ++i) {
+                      a[i] = String.fromCharCode(HEAPU8[value + 4 + i]);
+                  }
+                  str = a.join('');
+              }
+  
+              _free(value);
+  
+              return str;
+          },
+          'toWireType': function(destructors, value) {
+              if (value instanceof ArrayBuffer) {
+                  value = new Uint8Array(value);
+              }
+  
+              var getLength;
+              var valueIsOfTypeString = (typeof value == 'string');
+  
+              if (!(valueIsOfTypeString || value instanceof Uint8Array || value instanceof Uint8ClampedArray || value instanceof Int8Array)) {
+                  throwBindingError('Cannot pass non-string to std::string');
+              }
+              if (stdStringIsUTF8 && valueIsOfTypeString) {
+                  getLength = () => lengthBytesUTF8(value);
+              } else {
+                  getLength = () => value.length;
+              }
+  
+              // assumes 4-byte alignment
+              var length = getLength();
+              var ptr = _malloc(4 + length + 1);
+              HEAPU32[ptr >> 2] = length;
+              if (stdStringIsUTF8 && valueIsOfTypeString) {
+                  stringToUTF8(value, ptr + 4, length + 1);
+              } else {
+                  if (valueIsOfTypeString) {
+                      for (var i = 0; i < length; ++i) {
+                          var charCode = value.charCodeAt(i);
+                          if (charCode > 255) {
+                              _free(ptr);
+                              throwBindingError('String has UTF-16 code units that do not fit in 8 bits');
+                          }
+                          HEAPU8[ptr + 4 + i] = charCode;
+                      }
+                  } else {
+                      for (var i = 0; i < length; ++i) {
+                          HEAPU8[ptr + 4 + i] = value[i];
+                      }
+                  }
+              }
+  
+              if (destructors !== null) {
+                  destructors.push(_free, ptr);
+              }
+              return ptr;
+          },
+          'argPackAdvance': 8,
+          'readValueFromPointer': simpleReadValueFromPointer,
+          destructorFunction: function(ptr) { _free(ptr); },
+      });
+    }
+
+  function __embind_register_std_wstring(rawType, charSize, name) {
+      name = readLatin1String(name);
+      var decodeString, encodeString, getHeap, lengthBytesUTF, shift;
+      if (charSize === 2) {
+          decodeString = UTF16ToString;
+          encodeString = stringToUTF16;
+          lengthBytesUTF = lengthBytesUTF16;
+          getHeap = () => HEAPU16;
+          shift = 1;
+      } else if (charSize === 4) {
+          decodeString = UTF32ToString;
+          encodeString = stringToUTF32;
+          lengthBytesUTF = lengthBytesUTF32;
+          getHeap = () => HEAPU32;
+          shift = 2;
+      }
+      registerType(rawType, {
+          name: name,
+          'fromWireType': function(value) {
+              // Code mostly taken from _embind_register_std_string fromWireType
+              var length = HEAPU32[value >> 2];
+              var HEAP = getHeap();
+              var str;
+  
+              var decodeStartPtr = value + 4;
+              // Looping here to support possible embedded '0' bytes
+              for (var i = 0; i <= length; ++i) {
+                  var currentBytePtr = value + 4 + i * charSize;
+                  if (i == length || HEAP[currentBytePtr >> shift] == 0) {
+                      var maxReadBytes = currentBytePtr - decodeStartPtr;
+                      var stringSegment = decodeString(decodeStartPtr, maxReadBytes);
+                      if (str === undefined) {
+                          str = stringSegment;
+                      } else {
+                          str += String.fromCharCode(0);
+                          str += stringSegment;
+                      }
+                      decodeStartPtr = currentBytePtr + charSize;
+                  }
+              }
+  
+              _free(value);
+  
+              return str;
+          },
+          'toWireType': function(destructors, value) {
+              if (!(typeof value == 'string')) {
+                  throwBindingError('Cannot pass non-string to C++ string type ' + name);
+              }
+  
+              // assumes 4-byte alignment
+              var length = lengthBytesUTF(value);
+              var ptr = _malloc(4 + length + charSize);
+              HEAPU32[ptr >> 2] = length >> shift;
+  
+              encodeString(value, ptr + 4, length + charSize);
+  
+              if (destructors !== null) {
+                  destructors.push(_free, ptr);
+              }
+              return ptr;
+          },
+          'argPackAdvance': 8,
+          'readValueFromPointer': simpleReadValueFromPointer,
+          destructorFunction: function(ptr) { _free(ptr); },
+      });
+    }
+
+  function __embind_register_void(rawType, name) {
+      name = readLatin1String(name);
+      registerType(rawType, {
+          isVoid: true, // void return values can be optimized out sometimes
+          name: name,
+          'argPackAdvance': 0,
+          'fromWireType': function() {
+              return undefined;
+          },
+          'toWireType': function(destructors, o) {
+              // TODO: assert if anything else is given?
+              return undefined;
+          },
+      });
+    }
+
+  function getTypeName(type) {
+      var ptr = ___getTypeName(type);
+      var rv = readLatin1String(ptr);
+      _free(ptr);
+      return rv;
+    }
+  function requireRegisteredType(rawType, humanName) {
+      var impl = registeredTypes[rawType];
+      if (undefined === impl) {
+          throwBindingError(humanName + " has unknown type " + getTypeName(rawType));
+      }
+      return impl;
+    }
+  function __emval_as(handle, returnType, destructorsRef) {
+      handle = Emval.toValue(handle);
+      returnType = requireRegisteredType(returnType, 'emval::as');
+      var destructors = [];
+      var rd = Emval.toHandle(destructors);
+      HEAP32[destructorsRef >> 2] = rd;
+      return returnType['toWireType'](destructors, handle);
+    }
+
+  function __emval_allocateDestructors(destructorsRef) {
+      var destructors = [];
+      HEAP32[destructorsRef >> 2] = Emval.toHandle(destructors);
+      return destructors;
+    }
+  
+  var emval_symbols = {};
+  function getStringOrSymbol(address) {
+      var symbol = emval_symbols[address];
+      if (symbol === undefined) {
+          return readLatin1String(address);
+      } else {
+          return symbol;
+      }
+    }
+  
+  var emval_methodCallers = [];
+  function __emval_call_method(caller, handle, methodName, destructorsRef, args) {
+      caller = emval_methodCallers[caller];
+      handle = Emval.toValue(handle);
+      methodName = getStringOrSymbol(methodName);
+      return caller(handle, methodName, __emval_allocateDestructors(destructorsRef), args);
+    }
+
+
+  function emval_get_global() {
+      if (typeof globalThis == 'object') {
+        return globalThis;
+      }
+      return (function(){
+        return Function;
+      })()('return this')();
+    }
+  function __emval_get_global(name) {
+      if (name===0) {
+        return Emval.toHandle(emval_get_global());
+      } else {
+        name = getStringOrSymbol(name);
+        return Emval.toHandle(emval_get_global()[name]);
+      }
+    }
+
+  function __emval_addMethodCaller(caller) {
+      var id = emval_methodCallers.length;
+      emval_methodCallers.push(caller);
+      return id;
+    }
+  
+  function __emval_lookupTypes(argCount, argTypes) {
+      var a = new Array(argCount);
+      for (var i = 0; i < argCount; ++i) {
+          a[i] = requireRegisteredType(
+              HEAP32[(argTypes >> 2) + i],
+              "parameter " + i);
+      }
+      return a;
+    }
+  
+  function new_(constructor, argumentList) {
+      if (!(constructor instanceof Function)) {
+          throw new TypeError('new_ called with constructor type ' + typeof(constructor) + " which is not a function");
+      }
+  
+      /*
+       * Previously, the following line was just:
+  
+       function dummy() {};
+  
+       * Unfortunately, Chrome was preserving 'dummy' as the object's name, even though at creation, the 'dummy' has the
+       * correct constructor name.  Thus, objects created with IMVU.new would show up in the debugger as 'dummy', which
+       * isn't very helpful.  Using IMVU.createNamedFunction addresses the issue.  Doublely-unfortunately, there's no way
+       * to write a test for this behavior.  -NRD 2013.02.22
+       */
+      var dummy = createNamedFunction(constructor.name || 'unknownFunctionName', function(){});
+      dummy.prototype = constructor.prototype;
+      var obj = new dummy;
+  
+      var r = constructor.apply(obj, argumentList);
+      return (r instanceof Object) ? r : obj;
+    }
+  
+  var emval_registeredMethods = [];
+  function __emval_get_method_caller(argCount, argTypes) {
+      var types = __emval_lookupTypes(argCount, argTypes);
+      var retType = types[0];
+      var signatureName = retType.name + "_$" + types.slice(1).map(function (t) { return t.name; }).join("_") + "$";
+      var returnId = emval_registeredMethods[signatureName];
+      if (returnId !== undefined) {
+        return returnId;
+      }
+  
+      var params = ["retType"];
+      var args = [retType];
+  
+      var argsList = ""; // 'arg0, arg1, arg2, ... , argN'
+      for (var i = 0; i < argCount - 1; ++i) {
+          argsList += (i !== 0 ? ", " : "") + "arg" + i;
+          params.push("argType" + i);
+          args.push(types[1 + i]);
+      }
+  
+      var functionName = makeLegalFunctionName("methodCaller_" + signatureName);
+      var functionBody =
+          "return function " + functionName + "(handle, name, destructors, args) {\n";
+  
+      var offset = 0;
+      for (var i = 0; i < argCount - 1; ++i) {
+          functionBody +=
+          "    var arg" + i + " = argType" + i + ".readValueFromPointer(args" + (offset ? ("+"+offset) : "") + ");\n";
+          offset += types[i + 1]['argPackAdvance'];
+      }
+      functionBody +=
+          "    var rv = handle[name](" + argsList + ");\n";
+      for (var i = 0; i < argCount - 1; ++i) {
+          if (types[i + 1]['deleteObject']) {
+              functionBody +=
+              "    argType" + i + ".deleteObject(arg" + i + ");\n";
+          }
+      }
+      if (!retType.isVoid) {
+          functionBody +=
+          "    return retType.toWireType(destructors, rv);\n";
+      }
+      functionBody +=
+          "};\n";
+  
+      params.push(functionBody);
+      var invokerFunction = new_(Function, params).apply(null, args);
+      returnId = __emval_addMethodCaller(invokerFunction);
+      emval_registeredMethods[signatureName] = returnId;
+      return returnId;
+    }
+
+  function __emval_get_property(handle, key) {
+      handle = Emval.toValue(handle);
+      key = Emval.toValue(key);
+      return Emval.toHandle(handle[key]);
+    }
+
+  function __emval_new_cstring(v) {
+      return Emval.toHandle(getStringOrSymbol(v));
+    }
+
+  function runDestructors(destructors) {
+      while (destructors.length) {
+          var ptr = destructors.pop();
+          var del = destructors.pop();
+          del(ptr);
+      }
+    }
+  function __emval_run_destructors(handle) {
+      var destructors = Emval.toValue(handle);
+      runDestructors(destructors);
+      __emval_decref(handle);
+    }
+
+  function _abort() {
+      abort('native code called abort()');
+    }
 
   var _emscripten_get_now;if (ENVIRONMENT_IS_NODE) {
     _emscripten_get_now = () => {
@@ -8558,6 +9333,10 @@ ERRNO_CODES = {
       'EOWNERDEAD': 62,
       'ESTRPIPE': 135,
     };;
+embind_init_charCodes();
+BindingError = Module['BindingError'] = extendError(Error, 'BindingError');;
+InternalError = Module['InternalError'] = extendError(Error, 'InternalError');;
+init_emval();;
 Module["requestFullscreen"] = function Module_requestFullscreen(lockPointer, resizeCanvas) { Browser.requestFullscreen(lockPointer, resizeCanvas) };
   Module["requestFullScreen"] = function Module_requestFullScreen() { Browser.requestFullScreen() };
   Module["requestAnimationFrame"] = function Module_requestAnimationFrame(func) { Browser.requestAnimationFrame(func) };
@@ -8614,6 +9393,24 @@ var asmLibraryArg = {
   "__syscall_fcntl64": ___syscall_fcntl64,
   "__syscall_ioctl": ___syscall_ioctl,
   "__syscall_open": ___syscall_open,
+  "_embind_register_bigint": __embind_register_bigint,
+  "_embind_register_bool": __embind_register_bool,
+  "_embind_register_emval": __embind_register_emval,
+  "_embind_register_float": __embind_register_float,
+  "_embind_register_integer": __embind_register_integer,
+  "_embind_register_memory_view": __embind_register_memory_view,
+  "_embind_register_std_string": __embind_register_std_string,
+  "_embind_register_std_wstring": __embind_register_std_wstring,
+  "_embind_register_void": __embind_register_void,
+  "_emval_as": __emval_as,
+  "_emval_call_method": __emval_call_method,
+  "_emval_decref": __emval_decref,
+  "_emval_get_global": __emval_get_global,
+  "_emval_get_method_caller": __emval_get_method_caller,
+  "_emval_get_property": __emval_get_property,
+  "_emval_new_cstring": __emval_new_cstring,
+  "_emval_run_destructors": __emval_run_destructors,
+  "abort": _abort,
   "clock_gettime": _clock_gettime,
   "eglBindAPI": _eglBindAPI,
   "eglChooseConfig": _eglChooseConfig,
@@ -8862,6 +9659,12 @@ var _memcpy = Module["_memcpy"] = createExportWrapper("memcpy");
 
 /** @type {function(...*):?} */
 var ___errno_location = Module["___errno_location"] = createExportWrapper("__errno_location");
+
+/** @type {function(...*):?} */
+var ___getTypeName = Module["___getTypeName"] = createExportWrapper("__getTypeName");
+
+/** @type {function(...*):?} */
+var ___embind_register_native_and_builtin_types = Module["___embind_register_native_and_builtin_types"] = createExportWrapper("__embind_register_native_and_builtin_types");
 
 /** @type {function(...*):?} */
 var ___stdio_exit = Module["___stdio_exit"] = createExportWrapper("__stdio_exit");
@@ -9124,6 +9927,98 @@ unexportedRuntimeFunction('GLFW', false);
 unexportedRuntimeFunction('GLEW', false);
 unexportedRuntimeFunction('IDBStore', false);
 unexportedRuntimeFunction('runAndAbortIfError', false);
+unexportedRuntimeFunction('InternalError', false);
+unexportedRuntimeFunction('BindingError', false);
+unexportedRuntimeFunction('UnboundTypeError', false);
+unexportedRuntimeFunction('PureVirtualError', false);
+unexportedRuntimeFunction('init_embind', false);
+unexportedRuntimeFunction('throwInternalError', false);
+unexportedRuntimeFunction('throwBindingError', false);
+unexportedRuntimeFunction('throwUnboundTypeError', false);
+unexportedRuntimeFunction('ensureOverloadTable', false);
+unexportedRuntimeFunction('exposePublicSymbol', false);
+unexportedRuntimeFunction('replacePublicSymbol', false);
+unexportedRuntimeFunction('extendError', false);
+unexportedRuntimeFunction('createNamedFunction', false);
+unexportedRuntimeFunction('registeredInstances', false);
+unexportedRuntimeFunction('getBasestPointer', false);
+unexportedRuntimeFunction('registerInheritedInstance', false);
+unexportedRuntimeFunction('unregisterInheritedInstance', false);
+unexportedRuntimeFunction('getInheritedInstance', false);
+unexportedRuntimeFunction('getInheritedInstanceCount', false);
+unexportedRuntimeFunction('getLiveInheritedInstances', false);
+unexportedRuntimeFunction('registeredTypes', false);
+unexportedRuntimeFunction('awaitingDependencies', false);
+unexportedRuntimeFunction('typeDependencies', false);
+unexportedRuntimeFunction('registeredPointers', false);
+unexportedRuntimeFunction('registerType', false);
+unexportedRuntimeFunction('whenDependentTypesAreResolved', false);
+unexportedRuntimeFunction('embind_charCodes', false);
+unexportedRuntimeFunction('embind_init_charCodes', false);
+unexportedRuntimeFunction('readLatin1String', false);
+unexportedRuntimeFunction('getTypeName', false);
+unexportedRuntimeFunction('heap32VectorToArray', false);
+unexportedRuntimeFunction('requireRegisteredType', false);
+unexportedRuntimeFunction('getShiftFromSize', false);
+unexportedRuntimeFunction('integerReadValueFromPointer', false);
+unexportedRuntimeFunction('enumReadValueFromPointer', false);
+unexportedRuntimeFunction('floatReadValueFromPointer', false);
+unexportedRuntimeFunction('simpleReadValueFromPointer', false);
+unexportedRuntimeFunction('runDestructors', false);
+unexportedRuntimeFunction('new_', false);
+unexportedRuntimeFunction('craftInvokerFunction', false);
+unexportedRuntimeFunction('embind__requireFunction', false);
+unexportedRuntimeFunction('tupleRegistrations', false);
+unexportedRuntimeFunction('structRegistrations', false);
+unexportedRuntimeFunction('genericPointerToWireType', false);
+unexportedRuntimeFunction('constNoSmartPtrRawPointerToWireType', false);
+unexportedRuntimeFunction('nonConstNoSmartPtrRawPointerToWireType', false);
+unexportedRuntimeFunction('init_RegisteredPointer', false);
+unexportedRuntimeFunction('RegisteredPointer', false);
+unexportedRuntimeFunction('RegisteredPointer_getPointee', false);
+unexportedRuntimeFunction('RegisteredPointer_destructor', false);
+unexportedRuntimeFunction('RegisteredPointer_deleteObject', false);
+unexportedRuntimeFunction('RegisteredPointer_fromWireType', false);
+unexportedRuntimeFunction('runDestructor', false);
+unexportedRuntimeFunction('releaseClassHandle', false);
+unexportedRuntimeFunction('finalizationRegistry', false);
+unexportedRuntimeFunction('detachFinalizer_deps', false);
+unexportedRuntimeFunction('detachFinalizer', false);
+unexportedRuntimeFunction('attachFinalizer', false);
+unexportedRuntimeFunction('makeClassHandle', false);
+unexportedRuntimeFunction('init_ClassHandle', false);
+unexportedRuntimeFunction('ClassHandle', false);
+unexportedRuntimeFunction('ClassHandle_isAliasOf', false);
+unexportedRuntimeFunction('throwInstanceAlreadyDeleted', false);
+unexportedRuntimeFunction('ClassHandle_clone', false);
+unexportedRuntimeFunction('ClassHandle_delete', false);
+unexportedRuntimeFunction('deletionQueue', false);
+unexportedRuntimeFunction('ClassHandle_isDeleted', false);
+unexportedRuntimeFunction('ClassHandle_deleteLater', false);
+unexportedRuntimeFunction('flushPendingDeletes', false);
+unexportedRuntimeFunction('delayFunction', false);
+unexportedRuntimeFunction('setDelayFunction', false);
+unexportedRuntimeFunction('RegisteredClass', false);
+unexportedRuntimeFunction('shallowCopyInternalPointer', false);
+unexportedRuntimeFunction('downcastPointer', false);
+unexportedRuntimeFunction('upcastPointer', false);
+unexportedRuntimeFunction('validateThis', false);
+unexportedRuntimeFunction('char_0', false);
+unexportedRuntimeFunction('char_9', false);
+unexportedRuntimeFunction('makeLegalFunctionName', false);
+unexportedRuntimeFunction('emval_handle_array', false);
+unexportedRuntimeFunction('emval_free_list', false);
+unexportedRuntimeFunction('emval_symbols', false);
+unexportedRuntimeFunction('init_emval', false);
+unexportedRuntimeFunction('count_emval_handles', false);
+unexportedRuntimeFunction('get_first_emval', false);
+unexportedRuntimeFunction('getStringOrSymbol', false);
+unexportedRuntimeFunction('Emval', false);
+unexportedRuntimeFunction('emval_newers', false);
+unexportedRuntimeFunction('craftEmvalAllocator', false);
+unexportedRuntimeFunction('emval_get_global', false);
+unexportedRuntimeFunction('emval_methodCallers', false);
+unexportedRuntimeFunction('emval_registeredMethods', false);
 unexportedRuntimeFunction('warnOnce', false);
 unexportedRuntimeFunction('stackSave', false);
 unexportedRuntimeFunction('stackRestore', false);
